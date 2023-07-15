@@ -1,52 +1,42 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FunctionComponent } from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import { RootStackParamList } from "./types";
+import { ScrollView, StyleSheet } from "react-native";
+import HomeNavButton from "../components/ui/Home/HomeNavButton";
+import { DeviceSizes, Styles } from "../constants/styles";
+import { useWindowDimensions } from "react-native";
 
-type HomeProps = NativeStackScreenProps<RootStackParamList, "Home">;
+const Home = () => {
+  const { width } = useWindowDimensions();
+  const flexDirection = width <= DeviceSizes.Small ? "column" : "row";
 
-const Home = ({ route, navigation }: HomeProps) => {
   return (
-    <View style={styles.container}>
-      <Pressable
-        onPress={() => {
-          navigation.navigate("Admin");
-        }}
-      >
-        <View>
-          <Text>Admin</Text>
-        </View>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigation.navigate("Terminal");
-        }}
-      >
-        <View>
-          <Text>Terminal</Text>
-        </View>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigation.navigate("Kiosk");
-        }}
-      >
-        <View>
-          <Text>Kiosk</Text>
-        </View>
-      </Pressable>
-    </View>
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: "center",
+        justifyContent: "space-around",
+        flexDirection,
+        flexGrow: 1,
+      }}
+      horizontal={flexDirection === "row"}
+    >
+      <HomeNavButton
+        screenName="Admin"
+        text="Admin"
+        icon="lock-closed"
+        backgroundColor={Styles.Colors.logoBlue}
+      />
+      <HomeNavButton
+        screenName="Terminal"
+        text="Terminal"
+        icon="terminal"
+        backgroundColor={Styles.Colors.logoPurple}
+      />
+      <HomeNavButton
+        screenName="Kiosk"
+        text="Kiosk"
+        icon="cart"
+        backgroundColor={Styles.Colors.logoYellow}
+      />
+    </ScrollView>
   );
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flex: 1,
-    paddingHorizontal: 24,
-  },
-});
