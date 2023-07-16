@@ -26,7 +26,6 @@ export default Item;
 
 const styles = StyleSheet.create({
   item: {
-    minWidth: 150,
-    width: "25%",
+    width: "15%",
   },
 });

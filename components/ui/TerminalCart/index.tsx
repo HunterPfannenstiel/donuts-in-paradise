@@ -7,8 +7,8 @@ import {
   StyleProp,
   ViewStyle,
 } from "react-native";
-import { useCart } from "store/cart";
 import CartItemList from "../Cart/CartItemList";
+import CheckoutButton from "./CheckoutButton";
 
 interface TerminalCartProps {}
 
@@ -17,10 +17,11 @@ const TerminalCart: FunctionComponent<TerminalCartProps> = () => {
   const style: StyleProp<ViewStyle> =
     width <= DeviceSizes.Small
       ? { width: "100%", position: "absolute", top: "100%", padding: 16 }
-      : { width: "30%" };
+      : { width: "27%" };
   return (
     <View style={[styles.container, style]}>
       <CartItemList />
+      <CheckoutButton />
     </View>
   );
 };
@@ -28,5 +29,12 @@ const TerminalCart: FunctionComponent<TerminalCartProps> = () => {
 export default TerminalCart;
 
 const styles = StyleSheet.create({
-  container: { borderWidth: 2 },
+  container: {
+    elevation: 4,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    backgroundColor: "white",
+  },
 });

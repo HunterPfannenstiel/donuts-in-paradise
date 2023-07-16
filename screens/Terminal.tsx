@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: "row",
+    flex: 1,
   },
 });
 

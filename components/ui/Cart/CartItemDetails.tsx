@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     gap: 6,
+    paddingBottom: 6,
   },
   text: {
     fontSize: 18,

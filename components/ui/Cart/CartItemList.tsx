@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { useCart } from "../../../store/cart";
 import CartItem from "./CartItem";
 
@@ -8,10 +8,11 @@ interface CartItemListProps {}
 const CartItemList: FunctionComponent<CartItemListProps> = () => {
   const { items } = useCart();
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {items.map((item) => {
         return (
-          <CartItem cartItem={item}>
+          <CartItem cartItem={item} style={styles.item}>
+            <CartItem.Image />
             <View>
               <CartItem.Details />
               <CartItem.Extras />
@@ -21,12 +22,15 @@ const CartItemList: FunctionComponent<CartItemListProps> = () => {
         );
       })}
       {items.length !== 0 ? <Text>Tax</Text> : null}
-    </View>
+    </ScrollView>
   );
 };
 
 export default CartItemList;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { padding: 8 },
+  item: {
+    justifyContent: "space-between",
+  },
 });

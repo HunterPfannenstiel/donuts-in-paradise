@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { Image, StyleSheet } from "react-native";
 import { useCartItem } from "./context";
+import { Styles } from "../../../constants/styles";
 
 interface CartItemImageProps {}
 
@@ -13,8 +14,9 @@ export default CartItemImage;
 
 const styles = StyleSheet.create({
   image: {
-    height: "100%",
+    height: "80%",
     width: undefined,
     aspectRatio: 1,
+    backgroundColor: Styles.Colors.logoBlue,
   },
 });
