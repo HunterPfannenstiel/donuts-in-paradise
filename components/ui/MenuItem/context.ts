@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
+import { MenuItem } from "types";
 
-export type ItemType = { image: string; price?: string; name: string };
-
-export const Item = createContext<ItemType>({ image: "", price: "", name: "" });
+export const Item = createContext<MenuItem>({ image: "", price: "", name: "" });
 
 export const useItem = () => useContext(Item);

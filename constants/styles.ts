@@ -8,6 +8,10 @@ export const Styles = {
     logoYellow: "#FAF159",
     logoPurple: "#E5BBD8",
     logoBlue: "#B4E2EB",
+    gray: "#979797",
+  },
+  Fonts: {
+    normal: "fira-sans",
   },
 };
 

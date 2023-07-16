@@ -4,10 +4,11 @@ import { StyleSheet, Pressable, StyleProp, ViewStyle } from "react-native";
 import MenuItemName from "./MenuItemName";
 import MenuItemImage from "./MenuItemImage";
 import MenuItemPrice from "./MenuItemPrice";
-import { Item, ItemType } from "./context";
+import { Item } from "./context";
+import { MenuItem as MenuItemT } from "types";
 
 interface MenuItemProps {
-  item: ItemType;
+  item: MenuItemT;
   onPress: () => void;
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
@@ -29,9 +30,6 @@ MenuItem.Price = MenuItemPrice;
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: Styles.BorderRadius.lg,
-    borderWidth: 1,
-    borderColor: Styles.Colors.logoPurple,
-    padding: 16,
+    paddingBottom: 8,
   },
 });

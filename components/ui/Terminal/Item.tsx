@@ -1,20 +1,20 @@
 import { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import MenuItem from "../MenuItem";
+import { MenuItem as MenuItemT } from "types";
 
-interface ItemProps {}
+interface ItemProps {
+  item: MenuItemT;
+}
 
-const Item: FunctionComponent<ItemProps> = () => {
+const Item: FunctionComponent<ItemProps> = ({ item }) => {
   return (
     <MenuItem
-      item={{
-        name: "Apple Cider",
-        image:
-          "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-      }}
+      item={item}
       onPress={() => {
         console.log("Pressed");
       }}
+      style={styles.item}
     >
       <MenuItem.Image />
       <MenuItem.Name />
@@ -25,5 +25,8 @@ const Item: FunctionComponent<ItemProps> = () => {
 export default Item;
 
 const styles = StyleSheet.create({
-  container: {},
+  item: {
+    minWidth: 150,
+    width: "25%",
+  },
 });
