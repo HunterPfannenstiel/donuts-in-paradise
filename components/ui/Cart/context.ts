@@ -1,11 +1,12 @@
 import { createContext, useContext } from "react";
-import { CartItem as CartItemT } from "types/cart";
+import { DisplayCartItem } from "types/cart";
 
-const CartItem = createContext<CartItemT>({
+const CartItem = createContext<DisplayCartItem>({
+  id: 0,
   name: "",
   amount: 0,
   price: 0,
-  image: "",
+  imageUrl: "",
   extras: undefined,
   extraPrice: undefined,
 });

@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { StyleSheet, Pressable } from "react-native";
 import IconText from "../IconText";
-import { Styles } from "../../../constants/styles";
+import { Styles } from "@constants/styles";
 
 interface CheckoutButtonProps {}
 

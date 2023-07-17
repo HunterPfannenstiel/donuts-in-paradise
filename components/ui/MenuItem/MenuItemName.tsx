@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { StyleProp, StyleSheet, Text, TextStyle } from "react-native";
 import { useItem } from "./context";
-import { Styles } from "../../../constants/styles";
+import { Styles } from "@constants/styles";
 
 interface MenuItemNameProps {
   style?: StyleProp<TextStyle>;

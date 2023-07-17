@@ -1,13 +1,13 @@
 import { FunctionComponent } from "react";
 import { Image, StyleSheet } from "react-native";
 import { useCartItem } from "./context";
-import { Styles } from "../../../constants/styles";
+import { Styles } from "@constants/styles";
 
 interface CartItemImageProps {}
 
 const CartItemImage: FunctionComponent<CartItemImageProps> = () => {
-  const { image } = useCartItem();
-  return <Image source={{ uri: image }} style={styles.image} />;
+  const { imageUrl } = useCartItem();
+  return <Image source={{ uri: imageUrl }} style={styles.image} />;
 };
 
 export default CartItemImage;

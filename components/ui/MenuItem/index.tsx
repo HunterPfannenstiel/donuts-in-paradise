@@ -1,5 +1,4 @@
-import { Styles } from "../../../constants/styles";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode } from "react";
 import { StyleSheet, Pressable, StyleProp, ViewStyle } from "react-native";
 import MenuItemName from "./MenuItemName";
 import MenuItemImage from "./MenuItemImage";

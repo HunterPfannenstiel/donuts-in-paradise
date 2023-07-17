@@ -1,7 +1,6 @@
-import { Styles } from "../../../../constants/styles";
+import { Styles } from "@constants/styles";
 import { FunctionComponent } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { useCartItem } from "../context";
 
 interface CartItemExtraProps {
   name: string;

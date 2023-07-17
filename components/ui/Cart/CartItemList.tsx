@@ -6,22 +6,28 @@ import CartItem from "./CartItem";
 interface CartItemListProps {}
 
 const CartItemList: FunctionComponent<CartItemListProps> = () => {
-  const { items } = useCart();
+  const { sections } = useCart().cart;
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {items.map((item) => {
-        return (
-          <CartItem cartItem={item} style={styles.item}>
-            <CartItem.Image />
-            <View>
-              <CartItem.Details />
-              <CartItem.Extras />
-            </View>
-            <CartItem.Price />
-          </CartItem>
-        );
+      {sections.map((section) => {
+        return section.items.map((item) => {
+          const { name, price, imageUrl } = section;
+          return (
+            <CartItem
+              cartItem={{ ...item, name, price, imageUrl }}
+              style={styles.item}
+            >
+              <CartItem.Image />
+              <View>
+                <CartItem.Details />
+                <CartItem.Extras />
+              </View>
+              <CartItem.Price />
+            </CartItem>
+          );
+        });
       })}
-      {items.length !== 0 ? <Text>Tax</Text> : null}
+      {sections.length !== 0 ? <Text>Tax</Text> : null}
     </ScrollView>
   );
 };

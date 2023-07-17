@@ -1,4 +1,4 @@
-import { DeviceSizes } from "../../../constants/styles";
+import { DeviceSizes } from "@constants/styles";
 import { FunctionComponent } from "react";
 import {
   StyleSheet,

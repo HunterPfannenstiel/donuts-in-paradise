@@ -1,6 +1,6 @@
-import { ScrollView, StyleSheet } from "react-native";
-import HomeNavButton from "../components/ui/Home/HomeNavButton";
-import { DeviceSizes, Styles } from "../constants/styles";
+import { ScrollView } from "react-native";
+import HomeNavButton from "@ui/Home/HomeNavButton";
+import { DeviceSizes, Styles } from "@constants/styles";
 import { useWindowDimensions } from "react-native";
 
 const Home = () => {

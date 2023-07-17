@@ -5,17 +5,12 @@ import { MenuItem as MenuItemT } from "types";
 
 interface ItemProps {
   item: MenuItemT;
+  onPress: () => void;
 }
 
-const Item: FunctionComponent<ItemProps> = ({ item }) => {
+const Item: FunctionComponent<ItemProps> = ({ item, onPress }) => {
   return (
-    <MenuItem
-      item={item}
-      onPress={() => {
-        console.log("Pressed");
-      }}
-      style={styles.item}
-    >
+    <MenuItem item={item} onPress={onPress} style={styles.item}>
       <MenuItem.Image />
       <MenuItem.Name />
     </MenuItem>

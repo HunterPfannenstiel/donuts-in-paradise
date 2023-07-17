@@ -3,10 +3,13 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
-    // "paths": {
-    //   "@ui/*": ["components/ui/*"],
-    //   "@constants/*": ["constants/*"]
-    // },
+    "paths": {
+      "@ui/*": ["components/ui/*"],
+      "@constants/*": ["constants/*"],
+      "@_types/*": ["types/*"],
+      "@hooks/*": ["components/hooks/*"],
+      "@store/*": ["store/*"]
+    },
   },
   "exclude": ["node_modules"]
 }

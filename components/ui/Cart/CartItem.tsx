@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { CartItem as CartItemT } from "../../../types/cart";
+import { DisplayCartItem } from "../../../types/cart";
 import Context from "./context";
 import CartItemExtraList from "./Extras/CartItemExtraList";
 import CartItemDetails from "./CartItemDetails";
@@ -8,7 +8,7 @@ import CartItemPrice from "./CartItemPrice";
 import CartItemImage from "./CartItemImage";
 
 interface CartItemProps {
-  cartItem: CartItemT;
+  cartItem: DisplayCartItem;
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
 }

@@ -7,7 +7,7 @@ import {
   HomeScreenNavigationProp,
   RootStackParamList,
 } from "../../../screens/types";
-import { Styles } from "../../../constants/styles";
+import { Styles } from "@constants/styles";
 
 interface HomeNavButtonProps {
   screenName: keyof RootStackParamList;
