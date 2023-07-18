@@ -7,13 +7,20 @@ interface GridProps {
   children: ReactNode;
 }
 
-const Grid: FunctionComponent<GridProps> = ({ gap, children }) => {
+const Grid = <C extends typeof View | typeof ScrollView = typeof View>({
+  as,
+  gap,
+  children,
+}: { as?: C } & GridProps) => {
   const userStyle = gap ? { gap, padding: gap } : undefined;
-  return (
-    <ScrollView contentContainerStyle={[styles.container, userStyle]}>
-      {children}
-    </ScrollView>
-  );
+  const Component = as || View;
+  const styleProps = {} as { [key: string]: any };
+  if (Component === ScrollView) {
+    styleProps["contentContainerStyle"] = [styles.container, userStyle];
+  } else {
+    styleProps["style"] = [styles.container, userStyle];
+  }
+  return <Component {...styleProps}>{children}</Component>;
 };
 
 export default Grid;

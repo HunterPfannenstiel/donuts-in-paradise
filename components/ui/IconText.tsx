@@ -2,6 +2,7 @@ import { ComponentType } from "react";
 import { StyleSheet, View, Text, StyleProp, TextStyle } from "react-native";
 import { PolymorphicComponent } from "../../types/polymorphic";
 import { Ionicons } from "@expo/vector-icons";
+import { Styles } from "@constants/styles";
 
 interface IconTextProps {
   text: string;
@@ -26,7 +27,7 @@ const IconText = <C extends ComponentType = typeof View>({
   return (
     <Component {...restProps} style={[styles.container, restProps?.style]}>
       <Ionicons name={icon} size={size || 24} color={color} style={iconStyle} />
-      <Text style={[{ color }, textStyle]}>{text}</Text>
+      <Text style={[styles.text, { color }, textStyle]}>{text}</Text>
     </Component>
   );
 };
@@ -39,5 +40,8 @@ const styles = StyleSheet.create({
     gap: 8,
     padding: 16,
     alignItems: "center",
+  },
+  text: {
+    fontFamily: Styles.Fonts.normal,
   },
 });

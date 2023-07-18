@@ -156,7 +156,10 @@ export const checkItemExists = (
           const newItemExtra = extras[i];
           const index = item.extras.findIndex((extra) => {
             //see if the current item's extras contains the current extra being checked
-            return extra.name === newItemExtra.name;
+            return (
+              extra.name === newItemExtra.name &&
+              extra.category === newItemExtra.category
+            );
           });
           if (index === -1) {
             //if the current extra was not found, continue on to the next item

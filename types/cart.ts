@@ -1,6 +1,7 @@
 export type CartItemExtra = {
   id: number;
-  name: string; //ex: 'Sprinkle Topping'
+  name: string;
+  category: string;
   price?: number | null;
 };
 

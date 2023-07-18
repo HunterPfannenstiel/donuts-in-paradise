@@ -1,35 +1,40 @@
 import { FunctionComponent, useState } from "react";
-import { StyleSheet } from "react-native";
-import Grid from "../Grid";
-import { MenuItem } from "@_types/index";
-import Item from "./Item";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import MenuItemModal from "@ui/MenuItem/MenuItemModal";
 import useModal from "@hooks/useModal";
+import { useMenu } from "@store/menu";
+import { ActivityIndicator } from "react-native";
+import MenuSection from "./MenuSection";
 
-interface MenuItemListProps {
-  menuItems: MenuItem[];
-}
+interface MenuItemListProps {}
 
-const MenuItemList: FunctionComponent<MenuItemListProps> = ({ menuItems }) => {
+const MenuItemList: FunctionComponent<MenuItemListProps> = () => {
   const { getModalProps, handleModal } = useModal();
-  const [selectedItem, setSelectedItem] = useState<number>();
+  const [selectedItem, setSelectedItem] = useState<{
+    category: string;
+    itemId: number;
+  }>();
+  const handleItemClick = (category: string, itemId: number) => {
+    setSelectedItem({ category, itemId });
+    handleModal();
+  };
+  const { menu, isLoading, isError, error } = useMenu();
+  if (isLoading) return <ActivityIndicator />;
+  if (isError) return <Text>An error occurred</Text>;
   return (
     <>
-      <Grid>
-        {menuItems.map((item, i) => {
+      <ScrollView style={styles.container}>
+        {menu!.map((menuSection) => {
           return (
-            <Item
-              item={item}
-              key={item.id}
-              onPress={() => {
-                setSelectedItem(item.id);
-                handleModal();
-              }}
+            <MenuSection
+              category={menuSection.category}
+              items={menuSection.items}
+              onItemClick={handleItemClick.bind(null, menuSection.category)}
             />
           );
         })}
-      </Grid>
-      <MenuItemModal {...getModalProps()} itemId={selectedItem!} />
+      </ScrollView>
+      <MenuItemModal {...getModalProps()} {...selectedItem} />
     </>
   );
 };
@@ -37,5 +42,5 @@ const MenuItemList: FunctionComponent<MenuItemListProps> = ({ menuItems }) => {
 export default MenuItemList;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { flex: 1 },
 });
