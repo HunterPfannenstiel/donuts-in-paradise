@@ -23,16 +23,16 @@ export const fetchMenu = async () => {
           id: 1,
           imageUrl:
             "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-          price: "5.00",
+          price: "6.00",
           name: "Apple Cider",
           description:
             "Indulge in the irresistible delight of a freshly fried apple cider mini donut, with its warm, crispy exterior and delightful apple-infused sweetness.",
           extraCategories: [
             {
-              category: "Count",
+              category: "Size",
               extras: [
-                { id: 1, name: "12", price: null },
-                { id: 2, name: "24", price: "3.00" },
+                { id: 1, name: "Small", price: null },
+                { id: 2, name: "Large", price: "15.00" },
               ],
             },
           ],

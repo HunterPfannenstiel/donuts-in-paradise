@@ -9,7 +9,7 @@ const Terminal: FunctionComponent<TerminalProps> = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <MenuItemList menuItems={items} />
+        <MenuItemList />
         <TerminalCart />
       </View>
     </View>
@@ -27,48 +27,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-const items = [
-  {
-    id: 1,
-    name: "Apple Cider",
-    image:
-      "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-  },
-  {
-    id: 2,
-    name: "Apple Cider",
-    image:
-      "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-  },
-  {
-    id: 3,
-    name: "Apple Cider",
-    image:
-      "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-  },
-  {
-    id: 4,
-    name: "Apple Cider",
-    image:
-      "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-  },
-  {
-    id: 5,
-    name: "Apple Cider",
-    image:
-      "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-  },
-  {
-    id: 6,
-    name: "Apple Cider",
-    image:
-      "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-  },
-  {
-    id: 7,
-    name: "Apple Cider",
-    image:
-      "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400244/item_images/fgvymicizcsmmwqgbgyh.png",
-  },
-];

@@ -48,6 +48,9 @@ export default Modal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    borderWidth: 2,
+    borderColor: "black",
+    margin: 24,
   },
   closeButtonContainer: {
     flexDirection: "row",

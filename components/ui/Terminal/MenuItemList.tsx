@@ -34,6 +34,7 @@ const MenuItemList: FunctionComponent<MenuItemListProps> = () => {
           );
         })}
       </ScrollView>
+
       <MenuItemModal {...getModalProps()} {...selectedItem} />
     </>
   );

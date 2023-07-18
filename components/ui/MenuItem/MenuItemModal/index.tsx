@@ -1,10 +1,13 @@
 import { MenuItem } from "@_types/menu";
 import { useMenu } from "@store/menu";
-import IconText from "@ui/IconText";
 import Modal, { ModalComponentProps } from "@ui/Modal";
 import { FunctionComponent } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MenuModalButton from "./MenuModalButton";
+import SelectInputList from "@ui/Input/SelectInputList";
+import useMenuItemSelections from "@hooks/useMenuItemSelections";
+import Title from "@ui/Title";
+import NumberInput from "@ui/Input/NumberInput";
 
 type MenuItemModalProps = {
   category?: string;
@@ -18,18 +21,44 @@ const MenuItemModal: FunctionComponent<
   if (!category || !itemId) {
     return null;
   }
+  const { amount, updateSelection, getItemExtras } = useMenuItemSelections();
   const { findItem } = useMenu();
   let item: MenuItem;
   item = findItem(category, itemId);
 
+  const submitHandler = () => {
+    console.log(getItemExtras());
+  };
   return (
     <Modal style={[styles.container, style]} {...restProps}>
-      <Text style={styles.nameText}>{item.name}</Text>
+      <Title>{item.name}</Title>
+      {item.extraCategories?.map(({ category, extras }) => {
+        return (
+          <>
+            <Title>{category}</Title>
+            <SelectInputList
+              options={extras}
+              extractor={(extra) => ({ key: extra.id, label: extra.name })}
+              onSelect={(_, { id, name, price }) => {
+                updateSelection(category, {
+                  id,
+                  name,
+                  category,
+                  price: price ? +price : null,
+                });
+              }}
+              mode="radio"
+            />
+          </>
+        );
+      })}
+      <View>
+        <Text>Amount</Text>
+        <NumberInput />
+      </View>
       <MenuModalButton
         type={cartItemId ? "Modify" : "Add"}
-        onPress={() => {
-          console.log("add");
-        }}
+        onPress={submitHandler}
       />
     </Modal>
   );
@@ -39,11 +68,7 @@ export default MenuItemModal;
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
-    backgroundColor: "black",
-  },
-  nameText: {
-    fontSize: 24,
-    fontWeight: "bold",
   },
 });

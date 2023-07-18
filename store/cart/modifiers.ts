@@ -3,17 +3,18 @@ import {
   CartSectionDetails,
   ItemGroupDetails,
   NewCartItem,
-} from "@types/cart";
+} from "@_types/cart";
 import {
   CartDelegate,
   addNewItem,
   addNewItemAndGroup,
   addNewItemAndSection,
-  checkItemExists,
   clearCart,
+  modifyItem,
   removeItem,
   updateExistingItem,
-} from "./utils";
+} from "./logic/delegates";
+import { checkItemExists } from "./logic/utils";
 
 export const addItemFromItemPage = (
   dispatch: React.Dispatch<CartDelegate>,
@@ -45,6 +46,14 @@ export const updateItemFromCart = (
   amount: number
 ) => {
   dispatch(updateExistingItem(itemId, cartItemId, amount));
+};
+
+export const updateItemFromCheckout = (
+  dispatch: React.Dispatch<CartDelegate>,
+  cartItemId: number,
+  item: NewCartItem
+) => {
+  dispatch(modifyItem(cartItemId, item));
 };
 
 export const removeItemFromCart = (

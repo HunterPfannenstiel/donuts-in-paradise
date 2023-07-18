@@ -30,7 +30,7 @@ export default MenuModalButton;
 const styles = StyleSheet.create({
   button: {
     position: "absolute",
-    top: "100%",
+    top: "200%",
     width: "100%",
     padding: 24,
     backgroundColor: Styles.Colors.logoBlue,

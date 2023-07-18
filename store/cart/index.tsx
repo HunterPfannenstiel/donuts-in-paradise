@@ -6,13 +6,15 @@ import {
   useReducer,
 } from "react";
 import { Cart as CartT } from "@_types/cart";
-import { CartDelegate, getInitialContext } from "./utils";
 import {
   addItemFromItemPage,
   updateItemFromCart,
   deleteCart,
   removeItemFromCart,
+  updateItemFromCheckout,
 } from "./modifiers";
+import { getInitialContext } from "./utils";
+import { CartDelegate } from "./logic/delegates";
 
 const Cart = createContext(getInitialContext());
 
@@ -23,7 +25,7 @@ interface CartProviderProps {
 type CartReducer = (state: CartT, delegate: CartDelegate) => CartT;
 
 const reducer: CartReducer = (state, delegate) => {
-  return state;
+  return delegate(state);
 };
 
 const CartProvider: FunctionComponent<CartProviderProps> = ({ children }) => {
@@ -36,6 +38,7 @@ const CartProvider: FunctionComponent<CartProviderProps> = ({ children }) => {
         addItemFromItemPage: addItemFromItemPage.bind(null, dispatch),
         updateItemFromCart: updateItemFromCart.bind(null, dispatch),
         removeItemFromCart: removeItemFromCart.bind(null, dispatch),
+        updateItemFromCheckout: updateItemFromCheckout.bind(null, dispatch),
         deleteCart: deleteCart.bind(null, dispatch),
       }}
     >
