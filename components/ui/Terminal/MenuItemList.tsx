@@ -9,7 +9,7 @@ import MenuSection from "./MenuSection";
 interface MenuItemListProps {}
 
 const MenuItemList: FunctionComponent<MenuItemListProps> = () => {
-  const { getModalProps, handleModal } = useModal();
+  const { getModalProps, handleModal, visible } = useModal();
   const [selectedItem, setSelectedItem] = useState<{
     category: string;
     itemId: number;
@@ -34,8 +34,7 @@ const MenuItemList: FunctionComponent<MenuItemListProps> = () => {
           );
         })}
       </ScrollView>
-
-      <MenuItemModal {...getModalProps()} {...selectedItem} />
+      {visible && <MenuItemModal {...getModalProps()} {...selectedItem} />}
     </>
   );
 };

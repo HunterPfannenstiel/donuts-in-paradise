@@ -8,6 +8,8 @@ import SelectInputList from "@ui/Input/SelectInputList";
 import useMenuItemSelections from "@hooks/useMenuItemSelections";
 import Title from "@ui/Title";
 import NumberInput from "@ui/Input/NumberInput";
+import { useCart } from "@store/cart";
+import { ItemGroupDetails } from "@_types/cart";
 
 type MenuItemModalProps = {
   category?: string;
@@ -21,13 +23,40 @@ const MenuItemModal: FunctionComponent<
   if (!category || !itemId) {
     return null;
   }
-  const { amount, updateSelection, getItemExtras } = useMenuItemSelections();
+  const { updateSelection, getSelections, updateAmount } =
+    useMenuItemSelections();
   const { findItem } = useMenu();
+  const { addItemFromItemPage, modifyItemFromCheckout } = useCart();
   let item: MenuItem;
   item = findItem(category, itemId);
 
   const submitHandler = () => {
-    console.log(getItemExtras());
+    const { amount, extras } = getSelections();
+    const newItem = { id: itemId, extras, amount };
+    if (!cartItemId) {
+      let groupDetails: ItemGroupDetails | undefined = undefined;
+      if (item.groupId) {
+        groupDetails = {
+          id: item.groupId,
+          size: item.groupSize,
+          price: +item.groupPrice,
+          currentItemCount: 0,
+        };
+      }
+      addItemFromItemPage(
+        newItem,
+        {
+          id: itemId,
+          price: +item.price,
+          imageUrl: item.imageUrl,
+          groupId: item.groupId !== null ? item.groupId : undefined,
+          name: item.name,
+        },
+        groupDetails
+      );
+    } else {
+      modifyItemFromCheckout(cartItemId, newItem);
+    }
   };
   return (
     <Modal style={[styles.container, style]} {...restProps}>
@@ -54,7 +83,7 @@ const MenuItemModal: FunctionComponent<
       })}
       <View>
         <Text>Amount</Text>
-        <NumberInput />
+        <NumberInput onChange={updateAmount} />
       </View>
       <MenuModalButton
         type={cartItemId ? "Modify" : "Add"}

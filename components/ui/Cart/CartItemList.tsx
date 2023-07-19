@@ -16,6 +16,7 @@ const CartItemList: FunctionComponent<CartItemListProps> = () => {
             <CartItem
               cartItem={{ ...item, name, price, imageUrl }}
               style={styles.item}
+              key={item.id}
             >
               <CartItem.Image />
               <View>

@@ -145,15 +145,15 @@ export const extraToString = (category: string, extra: string) => {
 
 export const cloneSections = (sections: CartSection[], itemId?: number) => {
   return sections.map((section) => {
-    if (itemId) {
-      if (section.id === itemId) {
-        section.items = section.items.map((item) => ({ ...item }));
-      }
-      return { ...section };
-    } else {
-      section.items = section.items.map((item) => ({ ...item }));
-      return { ...section };
-    }
+    // if (itemId) {
+    //   if (section.id === itemId) {
+    //     section.items = section.items.map((item) => ({ ...item }));
+    //   }
+    //   return { ...section };
+    // } else {
+    section.items = section.items.map((item) => ({ ...item }));
+    return { ...section };
+    // }
   });
 };
 

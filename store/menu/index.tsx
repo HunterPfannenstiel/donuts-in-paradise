@@ -11,6 +11,7 @@ export const useMenu = () => {
     const section = data!.find((section) => section.category === category)!;
     return section.items.find((item) => item.id === id)!;
   };
+
   return { menu: data, isLoading, isError, error, findItem };
 };
 

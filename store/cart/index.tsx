@@ -14,7 +14,7 @@ import {
   updateItemFromCheckout,
 } from "./modifiers";
 import { getInitialContext } from "./utils";
-import { CartDelegate } from "./logic/delegates";
+import { CartDelegate, getEmptyCart } from "./logic/delegates";
 
 const Cart = createContext(getInitialContext());
 
@@ -25,11 +25,11 @@ interface CartProviderProps {
 type CartReducer = (state: CartT, delegate: CartDelegate) => CartT;
 
 const reducer: CartReducer = (state, delegate) => {
-  return delegate(state);
+  return delegate({ ...state });
 };
 
 const CartProvider: FunctionComponent<CartProviderProps> = ({ children }) => {
-  const [cart, dispatch] = useReducer(reducer, dummyCart);
+  const [cart, dispatch] = useReducer(reducer, getEmptyCart());
 
   return (
     <Cart.Provider
@@ -38,7 +38,7 @@ const CartProvider: FunctionComponent<CartProviderProps> = ({ children }) => {
         addItemFromItemPage: addItemFromItemPage.bind(null, dispatch),
         updateItemFromCart: updateItemFromCart.bind(null, dispatch),
         removeItemFromCart: removeItemFromCart.bind(null, dispatch),
-        updateItemFromCheckout: updateItemFromCheckout.bind(null, dispatch),
+        modifyItemFromCheckout: updateItemFromCheckout.bind(null, dispatch),
         deleteCart: deleteCart.bind(null, dispatch),
       }}
     >
@@ -50,22 +50,3 @@ const CartProvider: FunctionComponent<CartProviderProps> = ({ children }) => {
 export default CartProvider;
 
 export const useCart = () => useContext(Cart);
-
-const dummyCart: CartT = {
-  sections: [
-    {
-      id: 1,
-      groupId: 1,
-      imageUrl:
-        "https://res.cloudinary.com/dwg1i9w2u/image/upload/v1673400201/item_images/l7gfyvo8tps7zwdin4wn.png",
-      price: 1.1,
-      name: "Blueberry",
-      items: [{ id: 1, amount: 12 }],
-    },
-  ],
-  totalItems: 12,
-  groupingDiscount: 2,
-  price: 13.0,
-  groupDetails: [{ id: 1, price: 10.5, size: 12, currentItemCount: 12 }],
-  nextId: 2,
-};

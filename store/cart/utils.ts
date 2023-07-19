@@ -11,7 +11,6 @@ export type CartContext = {
   addItemFromItemPage: (
     item: NewCartItem,
     details: CartSectionDetails,
-    cart: Cart,
     groupDetails?: ItemGroupDetails
   ) => void;
   updateItemFromCart: (
@@ -20,7 +19,7 @@ export type CartContext = {
     amount: number
   ) => void;
   removeItemFromCart: (itemId: number, cartItemId: number) => void;
-  updateItemFromCheckout: (cartItemId: number, item: NewCartItem) => void;
+  modifyItemFromCheckout: (cartItemId: number, item: NewCartItem) => void;
   deleteCart: (dispatch: React.Dispatch<CartDelegate>) => void;
 };
 
@@ -31,7 +30,7 @@ export const getInitialContext = (): CartContext => {
     addItemFromItemPage: fn,
     updateItemFromCart: fn,
     removeItemFromCart: fn,
-    updateItemFromCheckout: fn,
+    modifyItemFromCheckout: fn,
     deleteCart: fn,
   };
 };

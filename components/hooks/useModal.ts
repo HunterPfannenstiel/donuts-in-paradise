@@ -29,7 +29,7 @@ const useModal = () => {
     };
   };
 
-  return { handleModal, getModalProps };
+  return { handleModal, visible, getModalProps };
 };
 
 export default useModal;

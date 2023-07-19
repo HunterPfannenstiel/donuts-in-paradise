@@ -7,23 +7,24 @@ const useMenuItemSelections = (
   initialAmount: number = 1,
   initialExtras?: CartItemExtra[]
 ) => {
-  const [amount, setAmount] = useState(initialAmount);
+  const amount = useRef(initialAmount);
   const selections = useRef(extrasToSelections(initialExtras));
 
-  const updateAmount = (amount: number) => {
-    setAmount(amount);
+  const updateAmount = (newAmount: number) => {
+    amount.current = newAmount;
   };
   const updateSelection = (category: string, extra: CartItemExtra) => {
     selections.current[category] = extra;
   };
 
-  const getItemExtras = () => {
-    return Object.keys(selections.current).map((category) => {
+  const getSelections = () => {
+    const extras = Object.keys(selections.current).map((category) => {
       return selections.current[category];
     });
+    return { extras, amount: amount.current };
   };
 
-  return { amount, updateAmount, updateSelection, getItemExtras };
+  return { amount, updateAmount, updateSelection, getSelections };
 };
 
 export default useMenuItemSelections;

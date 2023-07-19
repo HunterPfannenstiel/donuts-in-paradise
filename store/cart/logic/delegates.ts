@@ -18,42 +18,62 @@ import {
 
 export type CartDelegate = (cart: Cart) => Cart;
 
-export const addNewItemAndGroup =
+export const addItem =
   (
     item: NewCartItem,
     details: CartSectionDetails,
-    groupDetails: ItemGroupDetails
+    groupDetails?: ItemGroupDetails
   ): CartDelegate =>
   (cart) => {
-    cart.groupDetails = cloneGroupDetails(cart.groupDetails);
-    cart.groupDetails.push(groupDetails);
-    cart.sections = cloneSections(cart.sections);
-    cart.sections.push({ ...details, items: [] });
-    appendNewItem(cart, item, cart.sections[cart.sections.length - 1]);
-    return cart;
-  };
-
-export const addNewItemAndSection =
-  (item: NewCartItem, details: CartSectionDetails): CartDelegate =>
-  (cart) => {
-    cart.sections = cloneSections(cart.sections);
-    cart.sections.push({ ...details, items: [] });
-    appendNewItem(cart, item, cart.sections[cart.sections.length - 1]);
-    return cart;
-  };
-
-export const addNewItem =
-  (item: NewCartItem): CartDelegate =>
-  (cart) => {
-    cart.sections = cloneSections(cart.sections);
-    const section = cart.sections.find(({ id }) => id === item.id);
-    if (!section) {
-      console.log("Cart section has not been added?");
-      return cart;
+    const cartItemId = checkItemExists(item.id, cart, item.extras);
+    if (cartItemId === -2) {
+      //Section doesn't exist
+      if (groupDetails) {
+        addNewItemAndGroup(item, details, groupDetails, cart);
+      } else addNewItemAndSection(item, details, cart);
+    } else if (cartItemId === -1) {
+      //Specific item doesn't exist
+      addNewItem(item, cart);
+    } else {
+      return updateExistingItem(item.id, cartItemId, item.amount)(cart);
     }
-    appendNewItem(cart, item, section);
     return cart;
   };
+
+const addNewItemAndGroup = (
+  item: NewCartItem,
+  details: CartSectionDetails,
+  groupDetails: ItemGroupDetails,
+  cart: Cart
+) => {
+  cart.groupDetails = cloneGroupDetails(cart.groupDetails);
+  cart.groupDetails.push(groupDetails);
+  cart.sections = cloneSections(cart.sections);
+  cart.sections.push({ ...details, items: [] });
+  appendNewItem(cart, item, cart.sections[cart.sections.length - 1]);
+};
+
+const addNewItemAndSection = (
+  item: NewCartItem,
+  details: CartSectionDetails,
+  cart: Cart
+) => {
+  cart.sections = cloneSections(cart.sections);
+  cart.sections.push({ ...details, items: [] });
+  appendNewItem(cart, item, cart.sections[cart.sections.length - 1]);
+  return cart;
+};
+
+const addNewItem = (item: NewCartItem, cart: Cart) => {
+  cart.sections = cloneSections(cart.sections);
+  const section = cart.sections.find(({ id }) => id === item.id);
+  if (!section) {
+    console.log("Cart section has not been added?");
+    return cart;
+  }
+  appendNewItem(cart, item, section);
+  return cart;
+};
 
 export const updateExistingItem =
   (itemId: number, cartItemId: number, amount: number): CartDelegate =>
