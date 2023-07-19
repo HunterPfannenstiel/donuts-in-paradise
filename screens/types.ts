@@ -8,6 +8,7 @@ export type RootStackParamList = {
   Admin: undefined;
   Terminal: undefined;
   Kiosk: undefined;
+  Checkout: undefined;
 };
 
 export type HomeProps = NativeStackScreenProps<RootStackParamList, "Home">;

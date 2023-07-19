@@ -3,10 +3,13 @@ import { StyleSheet, Pressable } from "react-native";
 import IconText from "../IconText";
 import { Styles } from "@constants/styles";
 import { useCart } from "@store/cart";
+import { useNavigation } from "@react-navigation/native";
+import { HomeScreenNavigationProp } from "screens/types";
 
 interface CheckoutButtonProps {}
 
 const CheckoutButton: FunctionComponent<CheckoutButtonProps> = () => {
+  const { navigate } = useNavigation<HomeScreenNavigationProp>();
   const { price } = useCart().cart;
   return (
     <IconText
@@ -15,6 +18,9 @@ const CheckoutButton: FunctionComponent<CheckoutButtonProps> = () => {
       text={`Checkout $${price.toFixed(2)}`}
       style={styles.button}
       textStyle={styles.text}
+      onPress={() => {
+        navigate("Checkout");
+      }}
     />
   );
 };

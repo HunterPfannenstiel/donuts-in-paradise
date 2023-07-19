@@ -12,6 +12,7 @@ module.exports = function (api) {
             "@_types": "./types",
             "@hooks": "./components/hooks",
             "@store": "./store",
+            "@screens": "./screens",
           },
         },
       ],

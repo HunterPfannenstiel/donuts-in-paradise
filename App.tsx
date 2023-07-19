@@ -5,6 +5,7 @@ import { Admin, Home, Kiosk, Terminal } from "./screens";
 import CartProvider from "./store/cart";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import usePrepareApplication from "./components/hooks/usePrepareApplication";
+import CheckoutNavigator from "./screens/Checkout/Navigator";
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -22,6 +23,11 @@ export default function App() {
             <Stack.Screen name="Admin" component={Admin} />
             <Stack.Screen name="Terminal" component={Terminal} />
             <Stack.Screen name="Kiosk" component={Kiosk} />
+            <Stack.Screen
+              name="Checkout"
+              component={CheckoutNavigator}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </CartProvider>

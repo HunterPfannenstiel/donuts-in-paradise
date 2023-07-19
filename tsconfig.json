@@ -8,7 +8,8 @@
       "@constants/*": ["constants/*"],
       "@_types/*": ["types/*"],
       "@hooks/*": ["components/hooks/*"],
-      "@store/*": ["store/*"]
+      "@store/*": ["store/*"],
+      "@screens/*": ["screens/*"]
     },
   },
   "exclude": ["node_modules"]
