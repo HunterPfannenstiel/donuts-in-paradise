@@ -25,11 +25,24 @@ interface CartProviderProps {
 type CartReducer = (state: CartT, delegate: CartDelegate) => CartT;
 
 const reducer: CartReducer = (state, delegate) => {
-  return delegate({ ...state });
+  const cloneCart = {
+    ...state,
+    sections: state.sections.map((section) => {
+      return { ...section, items: section.items.map((item) => ({ ...item })) };
+    }),
+    groupDetails: state.groupDetails.map((details) => ({ ...details })),
+  };
+  delegate(cloneCart);
+  return cloneCart;
 };
 
 const CartProvider: FunctionComponent<CartProviderProps> = ({ children }) => {
   const [cart, dispatch] = useReducer(reducer, getEmptyCart());
+
+  const findByCartItemId = (itemId: number, cartItemId: number) => {
+    const { items } = cart.sections.find((section) => section.id === itemId)!;
+    return items.find((item) => item.id === cartItemId)!;
+  };
 
   return (
     <Cart.Provider
@@ -40,6 +53,7 @@ const CartProvider: FunctionComponent<CartProviderProps> = ({ children }) => {
         removeItemFromCart: removeItemFromCart.bind(null, dispatch),
         modifyItemFromCheckout: updateItemFromCheckout.bind(null, dispatch),
         deleteCart: deleteCart.bind(null, dispatch),
+        findByCartItemId,
       }}
     >
       {children}

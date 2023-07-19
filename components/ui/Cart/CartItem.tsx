@@ -1,5 +1,11 @@
 import { ReactNode } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from "react-native";
 import { DisplayCartItem } from "../../../types/cart";
 import Context from "./context";
 import CartItemExtraList from "./Extras/CartItemExtraList";
@@ -11,12 +17,15 @@ interface CartItemProps {
   cartItem: DisplayCartItem;
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
+  onPress?: () => void;
 }
 
-const CartItem = ({ cartItem, children, style }: CartItemProps) => {
+const CartItem = ({ cartItem, children, style, onPress }: CartItemProps) => {
   return (
     <Context.Provider value={cartItem}>
-      <View style={[styles.container, style]}>{children}</View>
+      <Pressable onPress={onPress}>
+        <View style={[styles.container, style]}>{children}</View>
+      </Pressable>
     </Context.Provider>
   );
 };

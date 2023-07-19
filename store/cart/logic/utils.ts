@@ -21,19 +21,20 @@ export const appendNewItem = (
 
 export const updateCartTotals = (
   cart: Cart,
-  itemAmount: number,
+  updateAmount: number,
   itemPrice: number,
   section: CartSection,
+  itemAmount?: number,
   itemIndex?: number
 ) => {
-  if (itemIndex && itemAmount < 1) {
+  if (itemIndex !== undefined && itemAmount !== undefined && itemAmount < 1) {
     section.items.splice(itemIndex, 1);
   }
   if (section.groupId) {
-    updateGroupDiscount(itemAmount, section.groupId, cart);
+    updateGroupDiscount(updateAmount, section.groupId, cart);
   }
-  cart.totalItems += itemAmount;
-  cart.price = cart.price + itemPrice * itemAmount;
+  cart.totalItems += updateAmount;
+  cart.price = cart.price + itemPrice * updateAmount;
 };
 
 export const findSectionByItemId = (itemId: number, cart: Cart) => {
@@ -76,10 +77,7 @@ export const isSameItem = (
       const newItemExtra = extrasTwo[i];
       const extra = extrasOne.find((extra) => {
         //see if the current item's extras contains the current extra being checked
-        return (
-          extra.name === newItemExtra.name &&
-          extra.category === newItemExtra.category
-        );
+        return extra.id === newItemExtra.id;
       });
       if (!extra) {
         //if the current extra was not found, continue on to the next item

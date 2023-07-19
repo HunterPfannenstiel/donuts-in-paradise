@@ -7,8 +7,6 @@ import {
 import {
   appendNewItem,
   checkItemExists,
-  cloneGroupDetails,
-  cloneSections,
   findItemByCartItemId,
   findSectionByItemId,
   isSameItem,
@@ -16,7 +14,7 @@ import {
   updateGroupDiscount,
 } from "./utils";
 
-export type CartDelegate = (cart: Cart) => Cart;
+export type CartDelegate = (cart: Cart) => void;
 
 export const addItem =
   (
@@ -35,9 +33,8 @@ export const addItem =
       //Specific item doesn't exist
       addNewItem(item, cart);
     } else {
-      return updateExistingItem(item.id, cartItemId, item.amount)(cart);
+      updateExistingItem(item.id, cartItemId, item.amount)(cart);
     }
-    return cart;
   };
 
 const addNewItemAndGroup = (
@@ -46,9 +43,7 @@ const addNewItemAndGroup = (
   groupDetails: ItemGroupDetails,
   cart: Cart
 ) => {
-  cart.groupDetails = cloneGroupDetails(cart.groupDetails);
   cart.groupDetails.push(groupDetails);
-  cart.sections = cloneSections(cart.sections);
   cart.sections.push({ ...details, items: [] });
   appendNewItem(cart, item, cart.sections[cart.sections.length - 1]);
 };
@@ -58,21 +53,17 @@ const addNewItemAndSection = (
   details: CartSectionDetails,
   cart: Cart
 ) => {
-  cart.sections = cloneSections(cart.sections);
   cart.sections.push({ ...details, items: [] });
   appendNewItem(cart, item, cart.sections[cart.sections.length - 1]);
-  return cart;
 };
 
 const addNewItem = (item: NewCartItem, cart: Cart) => {
-  cart.sections = cloneSections(cart.sections);
   const section = cart.sections.find(({ id }) => id === item.id);
   if (!section) {
     console.log("Cart section has not been added?");
-    return cart;
+    return;
   }
   appendNewItem(cart, item, section);
-  return cart;
 };
 
 export const updateExistingItem =
@@ -81,34 +72,32 @@ export const updateExistingItem =
     const section = cart.sections.find(({ id }) => id === itemId);
     if (!section) {
       console.log("Cart section has not been added?");
-      return cart;
+      return;
     }
     const itemIndex = section.items.findIndex(({ id }) => id === cartItemId);
     if (itemIndex === -1) {
       console.log("Item has not been added?");
-      return cart;
+      return;
     }
-    cart.sections = cloneSections(cart.sections, itemId);
+
     const item = section.items[itemIndex];
     item.amount += amount;
     const itemPrice = section.price + (item?.extraPrice! || 0);
-    updateCartTotals(cart, amount, itemPrice, section, itemIndex);
-    return cart;
+    updateCartTotals(cart, amount, itemPrice, section, item.amount, itemIndex);
   };
 
 export const removeItem =
   (itemId: number, cartItemId: number): CartDelegate =>
   (cart) => {
-    cart.sections = cloneSections(cart.sections, itemId);
     const section = cart.sections.find(({ id }) => id === itemId);
     if (!section) {
       console.log("Cart section has not been added?");
-      return cart;
+      return;
     }
     const itemIndex = section.items.findIndex(({ id }) => id === cartItemId);
     if (itemIndex === -1) {
       console.log("Item has not been added?");
-      return cart;
+      return;
     }
     const { extraPrice, amount } = section.items.splice(itemIndex, 1)[0];
     if (section.groupId) {
@@ -116,7 +105,6 @@ export const removeItem =
     }
     cart.price = cart.price - (section.price + (extraPrice || 0)) * amount;
     cart.totalItems -= amount;
-    return cart;
   };
 
 export const modifyItem =
@@ -125,25 +113,32 @@ export const modifyItem =
     const section = findSectionByItemId(item.id, cart);
     if (!section) {
       console.log("Update Item couldn't find section");
-      return cart;
+      return;
     }
-    cart.sections = cloneSections(cart.sections, section.id);
+
     const { index, foundItem } = findItemByCartItemId(cartItemId, section);
     if (!foundItem) {
       console.log("Update Item couldn't find item");
-      return cart;
+      return;
     }
     if (isSameItem(foundItem.extras, item.extras)) {
       //adjust current item amount and cart totals
       const adjustAmount = item.amount - foundItem.amount;
       foundItem.amount += adjustAmount;
       const itemPrice = section.price + (foundItem.extraPrice || 0);
-      updateCartTotals(cart, adjustAmount, itemPrice, section, index);
+      updateCartTotals(
+        cart,
+        adjustAmount,
+        itemPrice,
+        section,
+        foundItem.amount,
+        index
+      );
     } else {
       const exisitingCartId = checkItemExists(item.id, cart, item.extras);
       if (exisitingCartId > -1) {
         //update an exisiting item with the cart item id of 'exisitingCartId' with 'amount'
-        updateExistingItem(item.id, exisitingCartId, item.amount);
+        updateExistingItem(item.id, exisitingCartId, item.amount)(cart);
       } else {
         //add new item
         appendNewItem(cart, item, section);
@@ -152,9 +147,8 @@ export const modifyItem =
       const { amount } = foundItem;
       foundItem.amount = 0;
       const foundItemPrice = section.price + (foundItem.extraPrice || 0);
-      updateCartTotals(cart, -amount, foundItemPrice, section, index);
+      updateCartTotals(cart, -amount, foundItemPrice, section, 0, index);
     }
-    return cart;
   };
 
 export const clearCart = (): CartDelegate => () => {

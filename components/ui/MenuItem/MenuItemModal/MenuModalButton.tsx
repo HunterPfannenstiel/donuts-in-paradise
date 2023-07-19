@@ -30,9 +30,10 @@ export default MenuModalButton;
 const styles = StyleSheet.create({
   button: {
     position: "absolute",
-    top: "200%",
+    bottom: 0,
     width: "100%",
     padding: 24,
+    paddingBottom: 36,
     backgroundColor: Styles.Colors.logoBlue,
     justifyContent: "center",
   },

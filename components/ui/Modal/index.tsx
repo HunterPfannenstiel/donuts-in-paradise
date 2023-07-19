@@ -29,11 +29,11 @@ const Modal: FunctionComponent<
 }) => {
   return (
     <NativeModal
-      style={[styles.container, style]}
+      style={styles.container}
       animationType={animationType}
       {...restProps}
     >
-      <SafeAreaView>
+      <SafeAreaView style={[styles.container, style]}>
         <View style={styles.closeButtonContainer}>
           <Ionicons name="close" size={24} onPress={handleModal} />
         </View>
@@ -48,9 +48,6 @@ export default Modal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderWidth: 2,
-    borderColor: "black",
-    margin: 24,
   },
   closeButtonContainer: {
     flexDirection: "row",

@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { LegacyRef, forwardRef, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -9,47 +9,56 @@ import {
   ViewStyle,
 } from "react-native";
 
-interface NumberInputProps {
+export type NumberInputProps = {
   onChange?: (number: number) => void;
   initialNumber?: number;
   value?: number;
   style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle>;
-}
+  inputStyle?: StyleProp<TextStyle>;
+  ref?: LegacyRef<TextInput>;
+};
 
-const NumberInput: FunctionComponent<NumberInputProps> = ({
-  onChange,
-  initialNumber = 0,
-  value,
-  style,
-  textStyle,
-}) => {
-  const isControlled = value !== undefined && onChange;
-  const [number, setNumber] = useState(initialNumber.toString());
-  const handleChange = (num: string) => {
-    if (isControlled) {
-      onChange(+num);
-    } else {
-      if (onChange) onChange(+num);
-      setNumber(num);
-    }
-  };
-  const getState = () => {
-    return isControlled ? value.toString() : number;
-  };
-  return (
-    <ScrollView style={[styles.screen, style]}>
+const NumberInput = forwardRef(
+  (
+    { onChange, initialNumber = 0, value, style, inputStyle }: NumberInputProps,
+    ref: LegacyRef<TextInput>
+  ) => {
+    const isControlled = value !== undefined && onChange;
+    const [number, setNumber] = useState(initialNumber.toString());
+    const currentNumber = useRef(initialNumber.toString());
+    const handleChange = (num: string) => {
+      if (isControlled) {
+        onChange(+num);
+      } else {
+        if (onChange) onChange(+num);
+        setNumber(num);
+      }
+    };
+    const getState = () => {
+      return isControlled ? value.toString() : number;
+    };
+    const blurHandler = () => {
+      if (number === "") setNumber(currentNumber.current);
+    };
+    const focusHandler = () => {
+      setNumber("");
+      currentNumber.current = number;
+    };
+    return (
       <KeyboardAvoidingView style={styles.screen} behavior="position">
         <TextInput
-          style={[styles.text, textStyle]}
+          style={[styles.text, inputStyle]}
           value={getState()}
           onChangeText={handleChange}
           keyboardType="number-pad"
+          ref={ref}
+          onBlur={blurHandler}
+          onFocus={focusHandler}
         />
       </KeyboardAvoidingView>
-    </ScrollView>
-  );
-};
+    );
+  }
+);
 
 export default NumberInput;
 
@@ -58,6 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: 16,
+    fontSize: 24,
   },
 });

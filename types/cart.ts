@@ -25,6 +25,7 @@ export type CartSectionDetails = {
   price: number;
   imageUrl: string;
   groupId?: number;
+  category: string;
 };
 
 export type CartSection = {

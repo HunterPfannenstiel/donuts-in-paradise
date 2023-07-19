@@ -1,5 +1,6 @@
 import {
   Cart,
+  CartItem,
   CartSectionDetails,
   ItemGroupDetails,
   NewCartItem,
@@ -21,6 +22,7 @@ export type CartContext = {
   removeItemFromCart: (itemId: number, cartItemId: number) => void;
   modifyItemFromCheckout: (cartItemId: number, item: NewCartItem) => void;
   deleteCart: (dispatch: React.Dispatch<CartDelegate>) => void;
+  findByCartItemId: (itemId: number, cartItemId: number) => CartItem;
 };
 
 export const getInitialContext = (): CartContext => {
@@ -32,5 +34,8 @@ export const getInitialContext = (): CartContext => {
     removeItemFromCart: fn,
     modifyItemFromCheckout: fn,
     deleteCart: fn,
+    findByCartItemId: () => {
+      return {} as CartItem;
+    },
   };
 };

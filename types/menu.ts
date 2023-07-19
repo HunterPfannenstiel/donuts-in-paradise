@@ -1,7 +1,7 @@
 export type ItemExtra = {
   id: number;
   name: string;
-  price: string | null;
+  price?: string | null;
 };
 
 export type ItemExtras = {

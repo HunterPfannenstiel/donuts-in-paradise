@@ -2,15 +2,17 @@ import { FunctionComponent } from "react";
 import { StyleSheet, Pressable } from "react-native";
 import IconText from "../IconText";
 import { Styles } from "@constants/styles";
+import { useCart } from "@store/cart";
 
 interface CheckoutButtonProps {}
 
 const CheckoutButton: FunctionComponent<CheckoutButtonProps> = () => {
+  const { price } = useCart().cart;
   return (
     <IconText
       as={Pressable}
       icon="cash"
-      text="Checkout $24.55"
+      text={`Checkout $${price.toFixed(2)}`}
       style={styles.button}
       textStyle={styles.text}
     />

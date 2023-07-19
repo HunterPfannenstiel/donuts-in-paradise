@@ -8,13 +8,13 @@ interface CartItemPriceProps {
 }
 
 const CartItemPrice: FunctionComponent<CartItemPriceProps> = ({ style }) => {
-  const { price, extraPrice } = useCartItem();
-  const displayPrice = extraPrice
-    ? (price + extraPrice).toFixed(2)
-    : price.toFixed(2);
+  const { price, extraPrice, amount } = useCartItem();
+  const displayPrice = extraPrice ? price + extraPrice : price;
   const fontWeight = extraPrice ? "bold" : "normal";
   return (
-    <Text style={[styles.text, style, { fontWeight }]}>${displayPrice}</Text>
+    <Text style={[styles.text, style, { fontWeight }]}>
+      ${(displayPrice * amount).toFixed(2)}
+    </Text>
   );
 };
 
