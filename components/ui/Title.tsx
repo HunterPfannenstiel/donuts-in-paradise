@@ -6,15 +6,19 @@ interface TitleProps {
   children: ReactNode;
   fontSize?: number;
   fontFamily?: string;
+  textAlign?: "auto" | "left" | "right" | "center" | "justify";
 }
 
 const Title: FunctionComponent<TitleProps> = ({
   children,
   fontSize = 24,
   fontFamily = Styles.Fonts.normal,
+  textAlign,
 }) => {
   return (
-    <Text style={[styles.title, { fontSize, fontFamily }]}>{children}</Text>
+    <Text style={[styles.title, { fontSize, fontFamily, textAlign }]}>
+      {children}
+    </Text>
   );
 };
 

@@ -1,7 +1,11 @@
-import { LegacyRef, forwardRef, useRef, useState } from "react";
 import {
-  KeyboardAvoidingView,
-  ScrollView,
+  FunctionComponent,
+  LegacyRef,
+  forwardRef,
+  useRef,
+  useState,
+} from "react";
+import {
   StyleProp,
   StyleSheet,
   TextInput,
@@ -15,57 +19,54 @@ export type NumberInputProps = {
   value?: number;
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
-  ref?: LegacyRef<TextInput>;
+  ref?: (input: TextInput | null) => void;
 };
 
-const NumberInput = forwardRef(
-  (
-    { onChange, initialNumber = 0, value, style, inputStyle }: NumberInputProps,
-    ref: LegacyRef<TextInput>
-  ) => {
-    const isControlled = value !== undefined && onChange;
-    const [number, setNumber] = useState(initialNumber.toString());
-    const currentNumber = useRef(initialNumber.toString());
-    const handleChange = (num: string) => {
-      if (isControlled) {
-        onChange(+num);
-      } else {
-        if (onChange) onChange(+num);
-        setNumber(num);
-      }
-    };
-    const getState = () => {
-      return isControlled ? value.toString() : number;
-    };
-    const blurHandler = () => {
-      if (number === "") setNumber(currentNumber.current);
-    };
-    const focusHandler = () => {
-      setNumber("");
-      currentNumber.current = number;
-    };
-    return (
-      <KeyboardAvoidingView style={styles.screen} behavior="position">
-        <TextInput
-          style={[styles.text, inputStyle]}
-          value={getState()}
-          onChangeText={handleChange}
-          keyboardType="number-pad"
-          ref={ref}
-          onBlur={blurHandler}
-          onFocus={focusHandler}
-        />
-      </KeyboardAvoidingView>
-    );
-  }
-);
+const NumberInput: FunctionComponent<NumberInputProps> = ({
+  onChange,
+  initialNumber = 0,
+  value,
+  style,
+  ref,
+  inputStyle,
+}) => {
+  const isControlled = value !== undefined && onChange;
+  const [number, setNumber] = useState(initialNumber.toString());
+  const currentNumber = useRef(initialNumber.toString());
+  const handleChange = (num: string) => {
+    if (isControlled) {
+      onChange(+num);
+    } else {
+      if (onChange) onChange(+num);
+      setNumber(num);
+    }
+  };
+  const getState = () => {
+    return isControlled ? value.toString() : number;
+  };
+  const blurHandler = () => {
+    if (number === "") setNumber(currentNumber.current);
+  };
+  const focusHandler = () => {
+    setNumber("");
+    currentNumber.current = number;
+  };
+  return (
+    <TextInput
+      style={[styles.text, inputStyle]}
+      value={getState()}
+      onChangeText={handleChange}
+      keyboardType="number-pad"
+      ref={ref}
+      onBlur={blurHandler}
+      onFocus={focusHandler}
+    />
+  );
+};
 
 export default NumberInput;
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
   text: {
     fontSize: 24,
   },

@@ -9,6 +9,7 @@ export const Styles = {
     logoPurple: "#E5BBD8",
     logoBlue: "#B4E2EB",
     gray: "#979797",
+    error: "#FFCCCC",
   },
   Fonts: {
     normal: "fira-sans",

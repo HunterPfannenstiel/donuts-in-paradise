@@ -10,6 +10,8 @@ import Title from "@ui/Title";
 import { useCart } from "@store/cart";
 import { CartItemExtra, ItemGroupDetails } from "@_types/cart";
 import NumberLabel from "@ui/Input/NumberLabel";
+import LabeledInput from "@ui/Input/LabeledInput";
+import NumberInput from "@ui/Input/NumberInput";
 
 type MenuItemModalProps = {
   category?: string;
@@ -93,8 +95,14 @@ const MenuItemModal: FunctionComponent<
           </>
         );
       })}
-      <NumberLabel
+      {/* <NumberLabel
         label="Amount"
+        initialNumber={amount}
+        onChange={updateAmount}
+      /> */}
+      <LabeledInput
+        label="Amount"
+        as={NumberInput}
         initialNumber={amount}
         onChange={updateAmount}
       />

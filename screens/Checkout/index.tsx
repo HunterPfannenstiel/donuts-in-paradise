@@ -1,14 +1,12 @@
 import Title from "@ui/Title";
 import { FunctionComponent } from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import { CheckoutScreenNavigationProp } from "./RouteTypes";
+import { CheckoutScreenComponent } from "./RouteTypes";
 import Summary from "@ui/Checkout/Summary";
 
-interface CheckoutProps {
-  navigation: CheckoutScreenNavigationProp;
-}
+interface CheckoutProps extends CheckoutScreenComponent<"CheckoutHome"> {}
 
-const Checkout: FunctionComponent<CheckoutProps> = ({ navigation }) => {
+const Checkout = ({ route, navigation }: CheckoutProps) => {
   return (
     <View style={styles.container}>
       <Summary />

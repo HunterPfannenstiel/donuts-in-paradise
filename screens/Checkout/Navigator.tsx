@@ -7,8 +7,11 @@ import CardCheckout from "./CardCheckout";
 import { HomeScreenNavigationProp } from "@screens/types";
 import IconText from "@ui/IconText";
 import { useCart } from "@store/cart";
+import { CheckoutStackParamList } from "./RouteTypes";
+import CashEndScreen from "./CashEndScreen";
+import CardEndScreen from "./CardEndScreen";
 
-const CheckoutStack = createNativeStackNavigator();
+const CheckoutStack = createNativeStackNavigator<CheckoutStackParamList>();
 
 interface CheckoutNavigatorProps {
   navigation: HomeScreenNavigationProp;
@@ -35,6 +38,8 @@ const CheckoutNavigator: FunctionComponent<CheckoutNavigatorProps> = ({
       <CheckoutStack.Screen name="CheckoutHome" component={Checkout} />
       <CheckoutStack.Screen name="CashCheckout" component={CashCheckout} />
       <CheckoutStack.Screen name="CardCheckout" component={CardCheckout} />
+      <CheckoutStack.Screen name="CashEndScreen" component={CashEndScreen} />
+      <CheckoutStack.Screen name="CardEndScreen" component={CardEndScreen} />
     </CheckoutStack.Navigator>
   );
 };

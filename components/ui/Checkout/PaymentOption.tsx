@@ -1,22 +1,26 @@
 import { Styles } from "@constants/styles";
-import { useNavigation } from "@react-navigation/native";
-import { CheckoutScreenNavigationProp } from "@screens/Checkout/RouteTypes";
-import IconText from "@ui/IconText";
-import RowContainer from "@ui/RowContainer";
-import { FunctionComponent, ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
+import IconText, { PolymorhpicProps } from "@ui/IconText";
+import { FunctionComponent } from "react";
+import { Pressable, StyleSheet } from "react-native";
 
-interface PaymentOptionProps {
-  children: ReactNode;
+type PaymentOptionProps = {
   backgroundColor: string;
-}
+} & Omit<PolymorhpicProps<typeof Pressable>, "as" | "style">;
 
 const PaymentOption: FunctionComponent<PaymentOptionProps> = ({
-  children,
   backgroundColor,
+  text,
+  icon,
+  ...restProps
 }) => {
   return (
-    <View style={[styles.container, { backgroundColor }]}>{children}</View>
+    <IconText
+      as={Pressable}
+      icon={icon}
+      text={text}
+      style={[styles.container, { backgroundColor }]}
+      {...restProps}
+    />
   );
 };
 

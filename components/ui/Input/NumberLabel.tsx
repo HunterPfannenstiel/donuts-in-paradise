@@ -1,14 +1,12 @@
 import { FunctionComponent, useRef } from "react";
 import {
   StyleSheet,
-  View,
   Text,
   TextInput,
   TextStyle,
   StyleProp,
   ViewStyle,
   Pressable,
-  KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
 import NumberInput, { NumberInputProps } from "./NumberInput";
@@ -27,7 +25,10 @@ const NumberLabel: FunctionComponent<NumberLabelProps> = ({
   style,
   ...restProps
 }) => {
-  const numberInput = useRef<TextInput>(null);
+  const numberInput = useRef<TextInput | null>();
+  const getInputRef = (input: TextInput | null) => {
+    numberInput.current = input;
+  };
   const labalClickHandler = () => {
     numberInput.current!.focus();
   };
@@ -41,7 +42,7 @@ const NumberLabel: FunctionComponent<NumberLabelProps> = ({
         <Pressable onPress={labalClickHandler}>
           <Text style={[styles.label, labelStyle]}>{label}</Text>
         </Pressable>
-        <NumberInput {...restProps} ref={numberInput} />
+        <NumberInput {...restProps} ref={getInputRef} />
       </RowContainer>
     </ScrollView>
   );

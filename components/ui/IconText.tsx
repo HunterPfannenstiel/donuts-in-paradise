@@ -11,7 +11,11 @@ interface IconTextProps {
   textStyle?: StyleProp<TextStyle>;
   color?: string;
   size?: number;
+  style?: StyleProp<any>;
 }
+
+export type PolymorhpicProps<C extends ComponentType = typeof View> =
+  PolymorphicComponent<C, IconTextProps>;
 
 const IconText = <C extends ComponentType = typeof View>({
   as,
@@ -22,7 +26,7 @@ const IconText = <C extends ComponentType = typeof View>({
   color,
   size,
   ...restProps
-}: PolymorphicComponent<C, IconTextProps>) => {
+}: PolymorhpicProps<C>) => {
   const Component = as || View;
   return (
     <Component {...restProps} style={[styles.container, restProps?.style]}>
@@ -38,7 +42,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     gap: 8,
-    padding: 16,
     alignItems: "center",
   },
   text: {
