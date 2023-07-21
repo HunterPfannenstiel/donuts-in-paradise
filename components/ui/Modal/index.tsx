@@ -33,7 +33,7 @@ const Modal: FunctionComponent<
       animationType={animationType}
       {...restProps}
     >
-      <SafeAreaView style={[styles.container, style]}>
+      <SafeAreaView style={[styles.content, style]}>
         <View style={styles.closeButtonContainer}>
           <Ionicons name="close" size={24} onPress={handleModal} />
         </View>
@@ -47,6 +47,9 @@ export default Modal;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  content: {
     flex: 1,
   },
   closeButtonContainer: {

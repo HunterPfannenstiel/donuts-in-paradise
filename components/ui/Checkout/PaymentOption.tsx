@@ -19,6 +19,7 @@ const PaymentOption: FunctionComponent<PaymentOptionProps> = ({
       icon={icon}
       text={text}
       style={[styles.container, { backgroundColor }]}
+      textStyle={styles.text}
       {...restProps}
     />
   );
@@ -30,5 +31,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 24,
     borderRadius: Styles.BorderRadius.lg,
+  },
+  text: {
+    fontSize: 26,
+    padding: 16,
   },
 });

@@ -4,6 +4,11 @@ export const Styles = {
     md: 8,
     lg: 16,
   },
+  Padding: {
+    sm: 8,
+    md: 16,
+    lg: 24,
+  },
   Colors: {
     logoYellow: "#FAF159",
     logoPurple: "#E5BBD8",

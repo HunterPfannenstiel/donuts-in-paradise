@@ -1,21 +1,31 @@
 import Title from "@ui/Title";
-import { StyleSheet, View, Button } from "react-native";
+import { StyleSheet, View, Button, Pressable } from "react-native";
 import { CheckoutScreenComponent } from "./RouteTypes";
 import { useCart } from "@store/cart";
 import CashOptions from "@ui/Checkout/CashScreen/CashOptions";
 import LabeledInput from "@ui/Input/LabeledInput";
 import ValidatedInput from "@ui/Input/ValidatedInput";
 import useInputState from "@hooks/useInputState";
+import IconText from "@ui/IconText";
+import { Styles } from "@constants/styles";
 
 interface CashCheckoutProps extends CheckoutScreenComponent<"CashCheckout"> {}
 
 const CashCheckout = ({ route, navigation }: CashCheckoutProps) => {
-  const [{ value, isValid }, { setValue, setIsValid }] = useInputState("");
+  const [{ value, isValid, errorMessage }, { setValue, setIsValid }] =
+    useInputState("");
   const { price } = useCart().cart;
   const confirmHandler = () => {
     const enteredValue = +value;
-    if (!value || !enteredValue || enteredValue < price) {
-      setIsValid(false);
+    if (!value) {
+      setIsValid(false, "Please select a cash amount or enter a cash amount.");
+    } else if (!enteredValue) {
+      setIsValid(false, "Please enter a valid number for the cash amount.");
+    } else if (enteredValue < price) {
+      setIsValid(
+        false,
+        "Please enter a cash amount greater than or equal to the order total."
+      );
     } else {
       navigation.navigate("CashEndScreen", {
         name: route.params.name,
@@ -35,11 +45,19 @@ const CashCheckout = ({ route, navigation }: CashCheckoutProps) => {
       <CashOptions total={price} onOptionSelect={optionSelectHandler} />
       <LabeledInput
         label="Custom"
-        Input={ValidatedInput}
+        as={ValidatedInput}
         onChangeText={setValue}
         isValid={isValid}
+        errorMessage={errorMessage || ""}
+        containerStyle={styles.input}
       />
-      <Button title="Go" onPress={confirmHandler} />
+      <IconText
+        as={Pressable}
+        text="Confirm"
+        icon="arrow-forward"
+        style={styles.confirmButton}
+        onPress={confirmHandler}
+      />
     </View>
   );
 };
@@ -47,7 +65,17 @@ const CashCheckout = ({ route, navigation }: CashCheckoutProps) => {
 export default CashCheckout;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  container: { gap: 16 },
+  input: {
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "black",
+  },
+  confirmButton: {
+    padding: Styles.Padding.md,
+    backgroundColor: Styles.Colors.logoPurple,
+    borderRadius: Styles.BorderRadius.md,
   },
 });

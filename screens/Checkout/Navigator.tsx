@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FunctionComponent } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable } from "react-native";
 import Checkout from ".";
 import CashCheckout from "./CashCheckout";
 import CardCheckout from "./CardCheckout";
@@ -45,7 +45,3 @@ const CheckoutNavigator: FunctionComponent<CheckoutNavigatorProps> = ({
 };
 
 export default CheckoutNavigator;
-
-const styles = StyleSheet.create({
-  container: {},
-});

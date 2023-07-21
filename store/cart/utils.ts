@@ -21,7 +21,7 @@ export type CartContext = {
   ) => void;
   removeItemFromCart: (itemId: number, cartItemId: number) => void;
   modifyItemFromCheckout: (cartItemId: number, item: NewCartItem) => void;
-  deleteCart: (dispatch: React.Dispatch<CartDelegate>) => void;
+  deleteCart: () => void;
   findByCartItemId: (itemId: number, cartItemId: number) => CartItem;
 };
 

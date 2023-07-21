@@ -151,8 +151,13 @@ export const modifyItem =
     }
   };
 
-export const clearCart = (): CartDelegate => () => {
-  return getEmptyCart();
+export const clearCart = (): CartDelegate => (cart) => {
+  cart.sections = [];
+  cart.groupDetails = [];
+  cart.price = 0;
+  cart.groupingDiscount = 0;
+  cart.totalItems = 0;
+  cart.nextId = 0;
 };
 
 export const getEmptyCart = (): Cart => {

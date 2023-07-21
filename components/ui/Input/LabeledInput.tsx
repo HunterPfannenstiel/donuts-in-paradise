@@ -34,37 +34,31 @@ const LabeledInput = <C extends ComponentType<any> = typeof View>({
     input.current = ref;
   };
   const labalClickHandler = () => {
-    input.current!.focus();
+    input.current?.focus && input.current!.focus();
   };
   const Input = as || View;
   return (
-    <ScrollView
-      contentContainerStyle={[
-        styles.container,
-        containerStyle,
-        { flexGrow: 1 },
-      ]}
-      keyboardShouldPersistTaps="handled"
-      scrollEnabled={false}
-    >
-      <RowContainer>
-        <Pressable onPress={labalClickHandler}>
-          <Text style={[styles.label, labelStyle]}>{label}</Text>
-        </Pressable>
-        <KeyboardAvoidingView style={styles.container} behavior="position">
-          <Input {...restProps} />
-        </KeyboardAvoidingView>
-      </RowContainer>
-    </ScrollView>
+    // <ScrollView
+    //   contentContainerStyle={[styles.container, containerStyle]}
+    //   keyboardShouldPersistTaps="handled"
+    //   scrollEnabled={false}
+    // >
+    <RowContainer style={containerStyle}>
+      <Pressable onPress={labalClickHandler}>
+        <Text style={[styles.label, labelStyle]}>{label}</Text>
+      </Pressable>
+      <KeyboardAvoidingView style={styles.container} behavior="position">
+        <Input {...restProps} ref={getInputRef} />
+      </KeyboardAvoidingView>
+    </RowContainer>
+    /* </ScrollView> */
   );
 };
 
 export default LabeledInput;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: { flex: 1 },
   label: {
     fontSize: 24,
     fontFamily: Styles.Fonts.normal,

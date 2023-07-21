@@ -95,11 +95,6 @@ const MenuItemModal: FunctionComponent<
           </>
         );
       })}
-      {/* <NumberLabel
-        label="Amount"
-        initialNumber={amount}
-        onChange={updateAmount}
-      /> */}
       <LabeledInput
         label="Amount"
         as={NumberInput}

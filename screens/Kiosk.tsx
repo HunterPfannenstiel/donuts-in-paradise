@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
 
 interface KioskProps {}
 
@@ -7,6 +7,7 @@ const Kiosk: FunctionComponent<KioskProps> = () => {
   return (
     <View style={styles.container}>
       <Text>Kiosk</Text>
+      <Button title="eee" />
     </View>
   );
 };
@@ -14,5 +15,5 @@ const Kiosk: FunctionComponent<KioskProps> = () => {
 export default Kiosk;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { flex: 1 },
 });

@@ -1,7 +1,10 @@
 import Title from "@ui/Title";
 import { FunctionComponent } from "react";
-import { StyleSheet, View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import { CheckoutScreenComponent } from "./RouteTypes";
+import CashOptions from "@ui/Checkout/CashScreen/CashOptions";
+import LabeledInput from "@ui/Input/LabeledInput";
+import ValidatedInput from "@ui/Input/ValidatedInput";
 
 interface CardCheckoutProps extends CheckoutScreenComponent<"CardCheckout"> {}
 
@@ -11,7 +14,7 @@ const CardCheckout: FunctionComponent<CardCheckoutProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Title>Card</Title>
+      <Title textAlign="center">Checkout</Title>
     </View>
   );
 };
@@ -19,5 +22,5 @@ const CardCheckout: FunctionComponent<CardCheckoutProps> = ({
 export default CardCheckout;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { flex: 1 },
 });

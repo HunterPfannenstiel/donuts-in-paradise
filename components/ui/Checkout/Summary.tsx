@@ -29,10 +29,12 @@ const Summary: FunctionComponent<SummaryProps> = () => {
         <IconText
           icon="cash-sharp"
           text={`Total Price: $${price.toFixed(2)}`}
+          textStyle={styles.text}
         />
         <IconText
           icon="checkmark-circle-sharp"
           text={`Total Items: ${totalItems}`}
+          textStyle={styles.text}
         />
       </View>
       <LabeledInput
@@ -41,6 +43,9 @@ const Summary: FunctionComponent<SummaryProps> = () => {
         onChangeText={setValue}
         errorMessage={"Please enter a name"}
         isValid={isValid}
+        style={styles.name}
+        placeholder="Donut Paradise"
+        containerStyle={styles.nameContainer}
       />
       <View style={styles.paymentOptions}>
         <PaymentOption
@@ -63,11 +68,28 @@ const Summary: FunctionComponent<SummaryProps> = () => {
 export default Summary;
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  summary: { alignItems: "center" },
+  container: {
+    alignItems: "center",
+    gap: 16,
+    paddingTop: 16,
+  },
+  summary: {
+    flexDirection: "row",
+    gap: 36,
+  },
+  nameContainer: {
+    justifyContent: "center",
+    minWidth: "50%",
+  },
+  name: {
+    width: 500,
+  },
   paymentOptions: {
     flexDirection: "row",
     gap: 16,
-    justifyContent: "center",
+  },
+  text: {
+    fontSize: 24,
+    padding: Styles.Padding.sm,
   },
 });
