@@ -1,5 +1,5 @@
 import Title from "@ui/Title";
-import { StyleSheet, View, Button, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { CheckoutScreenComponent } from "./RouteTypes";
 import { useCart } from "@store/cart";
 import CashOptions from "@ui/Checkout/CashScreen/CashOptions";
@@ -8,6 +8,7 @@ import ValidatedInput from "@ui/Input/ValidatedInput";
 import useInputState from "@hooks/useInputState";
 import IconText from "@ui/IconText";
 import { Styles } from "@constants/styles";
+import DismissKeyboard from "@ui/Input/DismissKeyboard";
 
 interface CashCheckoutProps extends CheckoutScreenComponent<"CashCheckout"> {}
 
@@ -27,51 +28,58 @@ const CashCheckout = ({ route, navigation }: CashCheckoutProps) => {
         "Please enter a cash amount greater than or equal to the order total."
       );
     } else {
-      navigation.navigate("CashEndScreen", {
+      navigation.navigate("EndScreen", {
         name: route.params.name,
         change: enteredValue - price,
       });
     }
   };
   const optionSelectHandler = (amount: number) => {
-    navigation.navigate("CashEndScreen", {
+    navigation.navigate("EndScreen", {
       name: route.params.name,
       change: amount - price,
     });
   };
   return (
-    <View style={styles.container}>
-      <Title textAlign="center">Amount Recieved</Title>
-      <CashOptions total={price} onOptionSelect={optionSelectHandler} />
-      <LabeledInput
-        label="Custom"
-        as={ValidatedInput}
-        onChangeText={setValue}
-        isValid={isValid}
-        errorMessage={errorMessage || ""}
-        containerStyle={styles.input}
-      />
-      <IconText
-        as={Pressable}
-        text="Confirm"
-        icon="arrow-forward"
-        style={styles.confirmButton}
-        onPress={confirmHandler}
-      />
-    </View>
+    <DismissKeyboard>
+      <View style={styles.container}>
+        <Title textAlign="center">Amount Recieved:</Title>
+        <CashOptions total={price} onOptionSelect={optionSelectHandler} />
+        <LabeledInput
+          label="Custom: $"
+          as={ValidatedInput}
+          onChangeText={setValue}
+          isValid={isValid}
+          errorMessage={errorMessage || ""}
+          containerStyle={styles.inputContainer}
+          keyboardType="numeric"
+          style={styles.input}
+        />
+        <IconText
+          as={Pressable}
+          text="Confirm"
+          icon="arrow-forward"
+          style={styles.confirmButton}
+          onPress={confirmHandler}
+        />
+      </View>
+    </DismissKeyboard>
   );
 };
 
 export default CashCheckout;
 
 const styles = StyleSheet.create({
-  container: { gap: 16 },
-  input: {
-    width: "50%",
+  container: { gap: 24, paddingTop: 16, alignItems: "center" },
+  inputContainer: {
+    minWidth: 100,
+    width: "25%",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "black",
+  },
+  input: {
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
   },
   confirmButton: {
     padding: Styles.Padding.md,

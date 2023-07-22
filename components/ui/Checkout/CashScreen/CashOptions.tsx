@@ -20,9 +20,10 @@ const CashOptions: FunctionComponent<CashOptionsProps> = ({
           <IconText
             as={Pressable}
             style={styles.textOption}
-            icon="checkmark-done"
-            text={option}
+            icon="md-checkmark-done-sharp"
+            text={"$" + option}
             onPress={onOptionSelect.bind(null, +option)}
+            key={option}
           />
         );
       })}
@@ -33,7 +34,11 @@ const CashOptions: FunctionComponent<CashOptionsProps> = ({
 export default CashOptions;
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "row", justifyContent: "space-around" },
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "75%",
+  },
   textOption: {
     padding: 24,
     borderRadius: Styles.BorderRadius.md,
@@ -42,5 +47,16 @@ const styles = StyleSheet.create({
 });
 
 const getCashOptions = (total: number) => {
-  return [total.toFixed(2), (total + 5).toFixed(2), (total + 10).toFixed(2)];
+  const fiveRemainder = 5 - (total % 10);
+  const fiveAmount =
+    fiveRemainder < 0
+      ? Math.trunc(total + 5 + fiveRemainder)
+      : Math.trunc(total + fiveRemainder);
+  const oneAmount =
+    total !== Math.trunc(total) ? Math.trunc(total + 1) : undefined;
+  const amounts = [total.toFixed(2)];
+  if (oneAmount) amounts.push(oneAmount + ".00");
+  if (fiveAmount !== oneAmount) amounts.push(fiveAmount + ".00");
+  amounts.push(fiveAmount + 5 + ".00");
+  return amounts;
 };

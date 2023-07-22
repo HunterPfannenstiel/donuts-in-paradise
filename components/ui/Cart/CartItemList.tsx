@@ -10,7 +10,7 @@ type SelectedItem = { category: string; itemId: number; cartItemId: number };
 interface CartItemListProps {}
 
 const CartItemList: FunctionComponent<CartItemListProps> = () => {
-  const { sections } = useCart().cart;
+  const { sections, price } = useCart().cart;
   const { getModalProps, handleModal, visible } = useModal();
   const [selectedItem, setSelectedItem] = useState<SelectedItem>();
   const itemPressHandler = (
@@ -53,7 +53,7 @@ const CartItemList: FunctionComponent<CartItemListProps> = () => {
             );
           });
         })}
-        {sections.length !== 0 ? <Text>Tax</Text> : null}
+        {price ? <Text>Tax: ${(price * 0.08).toFixed(2)}</Text> : null}
       </ScrollView>
       {visible && <MenuItemModal {...getModalProps()} {...selectedItem} />}
     </>

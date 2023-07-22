@@ -64,6 +64,35 @@ export const fetchMenu = async () => {
           ],
           groupId: null,
         },
+        {
+          id: 3,
+          imageUrl:
+            "https://cookingwithcarlee.com/wp-content/uploads/2021/07/glasses-of-pink-lemonade.jpg",
+          price: "2.29",
+          name: "Apple Cider",
+          description:
+            "This Apple Cider is a classic, apple-based beverage made from the freshest apples around.",
+          extraCategories: [
+            {
+              category: "Size",
+              extras: [
+                { id: 6, name: "Small", price: null },
+                { id: 7, name: "Medium", price: "1.19" },
+                { id: 8, name: "Large", price: "2.03" },
+                { id: 9, name: "Gallon", price: "5.33" },
+              ],
+            },
+            {
+              category: "Apple",
+              extras: [
+                { id: 10, name: "Pink Lady", price: null },
+                { id: 11, name: "Star", price: null },
+                { id: 12, name: "American", price: null },
+              ],
+            },
+          ],
+          groupId: null,
+        },
       ],
     },
   ];

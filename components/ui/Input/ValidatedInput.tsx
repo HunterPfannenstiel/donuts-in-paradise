@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 24,
     fontFamily: Styles.Fonts.normal,
-    fontWeight: "normal",
+    fontWeight: "400",
   },
   error: {
     borderColor: "#cc0000",

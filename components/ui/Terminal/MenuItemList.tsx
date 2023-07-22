@@ -23,7 +23,7 @@ const MenuItemList: FunctionComponent<MenuItemListProps> = () => {
   if (isError) return <Text>An error occurred</Text>;
   return (
     <>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={{ gap: 16 }}>
         {menu!.map((menuSection) => {
           return (
             <MenuSection
@@ -42,5 +42,5 @@ const MenuItemList: FunctionComponent<MenuItemListProps> = () => {
 export default MenuItemList;
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, padding: 24 },
 });

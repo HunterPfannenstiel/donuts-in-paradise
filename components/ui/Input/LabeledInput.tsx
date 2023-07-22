@@ -47,7 +47,7 @@ const LabeledInput = <C extends ComponentType<any> = typeof View>({
       <Pressable onPress={labalClickHandler}>
         <Text style={[styles.label, labelStyle]}>{label}</Text>
       </Pressable>
-      <KeyboardAvoidingView style={styles.container} behavior="position">
+      <KeyboardAvoidingView style={styles.container} enabled behavior="padding">
         <Input {...restProps} ref={getInputRef} />
       </KeyboardAvoidingView>
     </RowContainer>

@@ -29,7 +29,7 @@ const IconText = <C extends ComponentType = typeof View>({
 }: PolymorhpicProps<C>) => {
   const Component = as || View;
   return (
-    <Component {...restProps} style={[styles.container, restProps?.style]}>
+    <Component {...restProps} style={[styles.container, restProps.style]}>
       <Ionicons name={icon} size={size || 24} color={color} style={iconStyle} />
       <Text style={[styles.text, { color }, textStyle]}>{text}</Text>
     </Component>

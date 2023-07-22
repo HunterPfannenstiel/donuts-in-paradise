@@ -29,13 +29,12 @@ export default MenuModalButton;
 
 const styles = StyleSheet.create({
   button: {
-    position: "absolute",
     bottom: 0,
-    width: "100%",
     padding: 24,
-    paddingBottom: 36,
     backgroundColor: Styles.Colors.logoBlue,
+    borderRadius: Styles.BorderRadius.lg,
     justifyContent: "center",
+    alignItems: "center",
   },
   buttonText: {
     fontSize: 24,

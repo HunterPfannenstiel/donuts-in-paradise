@@ -8,8 +8,7 @@ export type CheckoutStackParamList = {
   CheckoutHome: undefined;
   CashCheckout: { name: string };
   CardCheckout: { name: string };
-  CashEndScreen: { name: string; change: number };
-  CardEndScreen: { name: string };
+  EndScreen: { name: string; change?: number };
 } & RootStackParamList;
 
 export type CheckoutScreenNavigationProp =

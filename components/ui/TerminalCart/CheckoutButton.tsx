@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { StyleSheet, Pressable } from "react-native";
+import { StyleSheet, Pressable, Alert } from "react-native";
 import IconText from "../IconText";
 import { Styles } from "@constants/styles";
 import { useCart } from "@store/cart";
@@ -10,7 +10,18 @@ interface CheckoutButtonProps {}
 
 const CheckoutButton: FunctionComponent<CheckoutButtonProps> = () => {
   const { navigate } = useNavigation<HomeScreenNavigationProp>();
-  const { price } = useCart().cart;
+  const { price, totalItems } = useCart().cart;
+  const checkoutHandler = () => {
+    if (!totalItems) {
+      Alert.alert(
+        "No items for order",
+        "Please add items to the order before checking out.",
+        [{ text: "Okay", style: "default" }]
+      );
+    } else {
+      navigate("Checkout");
+    }
+  };
   return (
     <IconText
       as={Pressable}
@@ -18,9 +29,7 @@ const CheckoutButton: FunctionComponent<CheckoutButtonProps> = () => {
       text={`Checkout $${price.toFixed(2)}`}
       style={styles.button}
       textStyle={styles.text}
-      onPress={() => {
-        navigate("Checkout");
-      }}
+      onPress={checkoutHandler}
     />
   );
 };
@@ -30,7 +39,7 @@ export default CheckoutButton;
 const styles = StyleSheet.create({
   button: {
     width: "100%",
-    paddingVertical: 12,
+    paddingVertical: 28,
     paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
@@ -38,5 +47,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: Styles.Fonts.normal,
+    fontSize: 18,
   },
+  inactive: {},
 });

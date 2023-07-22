@@ -2,16 +2,16 @@ import { ItemExtras } from "@_types/menu";
 import { useMenu } from "@store/menu";
 import Modal, { ModalComponentProps } from "@ui/Modal";
 import { FunctionComponent, useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import MenuModalButton from "./MenuModalButton";
 import SelectInputList from "@ui/Input/SelectInputList";
 import useMenuItemSelections from "@hooks/useMenuItemSelections";
 import Title from "@ui/Title";
 import { useCart } from "@store/cart";
 import { CartItemExtra, ItemGroupDetails } from "@_types/cart";
-import NumberLabel from "@ui/Input/NumberLabel";
 import LabeledInput from "@ui/Input/LabeledInput";
 import NumberInput from "@ui/Input/NumberInput";
+import DismissKeyboard from "@ui/Input/DismissKeyboard";
 
 type MenuItemModalProps = {
   category?: string;
@@ -72,39 +72,56 @@ const MenuItemModal: FunctionComponent<
     restProps.handleModal();
   };
   return (
-    <Modal style={[styles.container, style]} {...restProps}>
-      <Title>{item.name}</Title>
-      {item.extraCategories?.map(({ category, extras }) => {
-        return (
-          <>
-            <Title>{category}</Title>
-            <SelectInputList
-              initialIds={initExtras?.map((extra) => extra.id)}
-              options={extras}
-              extractor={(extra) => ({ key: extra.id, label: extra.name })}
-              onSelect={(_, { id, name, price }) => {
-                updateSelection(category, {
-                  id,
-                  name,
-                  category,
-                  price: price ? +price : null,
-                });
-              }}
-              mode="radio"
+    <Modal
+      containerStyle={[styles.container, style]}
+      title={item.name}
+      {...restProps}
+    >
+      <DismissKeyboard>
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            style={styles.input}
+            contentContainerStyle={{ flex: 1, gap: 16 }}
+          >
+            {item.extraCategories?.map(({ category, extras }) => {
+              return (
+                <View>
+                  <Title fontSize={30}>{category}</Title>
+                  <SelectInputList
+                    initialIds={initExtras?.map((extra) => extra.id)}
+                    options={extras}
+                    extractor={(extra) => ({
+                      key: extra.id,
+                      label: extra.name,
+                    })}
+                    onSelect={(_, { id, name, price }) => {
+                      updateSelection(category, {
+                        id,
+                        name,
+                        category,
+                        price: price ? +price : null,
+                      });
+                    }}
+                    mode="radio"
+                  />
+                </View>
+              );
+            })}
+          </ScrollView>
+          <View style={styles.buttonContainer}>
+            <LabeledInput
+              label="Amount"
+              as={NumberInput}
+              initialNumber={amount}
+              onChange={updateAmount}
             />
-          </>
-        );
-      })}
-      <LabeledInput
-        label="Amount"
-        as={NumberInput}
-        initialNumber={amount}
-        onChange={updateAmount}
-      />
-      <MenuModalButton
-        type={cartItemId ? "Modify" : "Add"}
-        onPress={submitHandler}
-      />
+            <MenuModalButton
+              type={cartItemId !== undefined ? "Modify" : "Add"}
+              onPress={submitHandler}
+            />
+          </View>
+        </View>
+      </DismissKeyboard>
     </Modal>
   );
 };
@@ -125,9 +142,15 @@ export default MenuItemModal;
 const styles = StyleSheet.create({
   container: {
     position: "relative",
-    flex: 1,
+    flex: 0,
+    minHeight: "70%",
   },
   input: {
-    flex: 1,
+    gap: 16,
+  },
+  buttonContainer: {
+    gap: 16,
+    paddingTop: 24,
+    marginTop: "auto",
   },
 });

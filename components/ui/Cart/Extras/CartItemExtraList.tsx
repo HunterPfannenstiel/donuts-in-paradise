@@ -10,7 +10,7 @@ const CartItemExtraList: FunctionComponent<CartItemExtraListProps> = () => {
   return (
     <View style={styles.container}>
       {extras?.map((extra) => {
-        return <CartItemExtra {...extra} />;
+        return <CartItemExtra key={extra.id} {...extra} />;
       })}
     </View>
   );

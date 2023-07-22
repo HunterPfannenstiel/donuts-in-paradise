@@ -4,6 +4,7 @@ import { FunctionComponent } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Item from "../Item";
 import { Styles } from "@constants/styles";
+import Title from "@ui/Title";
 
 interface MenuSectionProps {
   category: string;
@@ -18,7 +19,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.categoryText}>{category}</Text>
+      <Title fontSize={36}>{category}</Title>
       <Grid>
         {items.map((item) => {
           return (
@@ -44,10 +45,5 @@ export default MenuSection;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-  },
-  categoryText: {
-    fontSize: 24,
-    fontFamily: Styles.Fonts.normal,
-    fontWeight: "bold",
   },
 });
