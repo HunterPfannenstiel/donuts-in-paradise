@@ -9,7 +9,8 @@
       "@_types/*": ["types/*"],
       "@hooks/*": ["components/hooks/*"],
       "@store/*": ["store/*"],
-      "@screens/*": ["screens/*"]
+      "@screens/*": ["screens/*"],
+      "@custom-objects/*": ["./custom-objects/*"]
     },
   },
   "exclude": ["node_modules"]

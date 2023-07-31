@@ -1,7 +1,7 @@
 export type ItemExtra = {
   id: number;
   name: string;
-  price?: string | null;
+  price?: string;
 };
 
 export type ItemExtras = {
@@ -12,7 +12,7 @@ export type ItemExtras = {
 export type DisplayMenuItem = {
   id: number;
   name: string;
-  imageUrl: string;
+  imageUrls: string[];
   price: string;
 };
 

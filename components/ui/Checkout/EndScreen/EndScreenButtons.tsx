@@ -1,20 +1,15 @@
 import { Styles } from "@constants/styles";
-import { useNavigation } from "@react-navigation/native";
-import { CheckoutScreenNavigationProp } from "@screens/Checkout/RouteTypes";
-import { useCart } from "@store/cart";
 import IconText from "@ui/IconText";
 import { FunctionComponent } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
-interface EndScreenButtonsProps {}
+interface EndScreenButtonsProps {
+  completeOrderHandler: () => void;
+}
 
-const EndScreenButtons: FunctionComponent<EndScreenButtonsProps> = () => {
-  const { navigate } = useNavigation<CheckoutScreenNavigationProp>();
-  const { deleteCart } = useCart();
-  const completeOrderHandler = () => {
-    deleteCart();
-    navigate("Terminal");
-  };
+const EndScreenButtons: FunctionComponent<EndScreenButtonsProps> = ({
+  completeOrderHandler,
+}) => {
   return (
     <View style={styles.buttonContainer}>
       <IconText

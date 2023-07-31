@@ -4,8 +4,9 @@ import {
   CartSectionDetails,
   ItemGroupDetails,
   NewCartItem,
+  OrderItem,
 } from "@_types/cart";
-import { CartDelegate, getEmptyCart } from "./logic/delegates";
+import { getEmptyCart } from "./logic/delegates";
 
 export type CartContext = {
   cart: Cart;
@@ -38,4 +39,15 @@ export const getInitialContext = (): CartContext => {
       return {} as CartItem;
     },
   };
+};
+
+export const getDatabaseCart = (cart: Cart) => {
+  const items: OrderItem[] = [];
+  cart.sections.forEach((section) => {
+    section.items.forEach(({ amount, extras }) => {
+      const extraIds = extras?.map((extra) => extra.id) || [];
+      items.push({ item_id: section.id, amount, extra_ids: extraIds });
+    });
+  });
+  return items;
 };
